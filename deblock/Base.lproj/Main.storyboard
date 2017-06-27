@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="deblock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home_refresh_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="5Ia-ne-LVT" userLabel="bgpic">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hpH-2a-fd0" userLabel="myview" customClass="GGView" customModule="deblock" customModuleProvider="target">
+                                <rect key="frame" x="32" y="50" width="256" height="454.5"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="2jm-gD-9FE"/>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5k8-Np-X05"/>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="96W-hX-HOV"/>
+                            <constraint firstItem="5Ia-ne-LVT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="LGw-4R-Ps0"/>
+                            <constraint firstItem="5Ia-ne-LVT" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="RBY-VS-CPz"/>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="SJ7-oe-GcT"/>
+                            <constraint firstItem="5Ia-ne-LVT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="atl-g7-aeQ"/>
+                            <constraint firstItem="5Ia-ne-LVT" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="rnY-bP-HyK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="myview" destination="hpH-2a-fd0" id="s3N-0q-tmP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="137.18140929535232"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Home_refresh_bg.png" width="640" height="1008"/>
+    </resources>
+</document>

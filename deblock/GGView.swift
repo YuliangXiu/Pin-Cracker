@@ -58,6 +58,7 @@ class GGView: UIView,UITextFieldDelegate {
     var motionurl : URL = URL(string: "/")!
     var currentPoint = CGPoint.zero
     var textView : UITextField!
+    var predView : UITextField!
     
     let motionManager = CMMotionManager()
     var timer: Timer!
@@ -104,14 +105,22 @@ class GGView: UIView,UITextFieldDelegate {
             }
         
         
-        textView = UITextField(frame: CGRect(x: 0 , y: 0, width: 0.8 * bounds.size.width, height: 0.15 * bounds.size.height))
+        textView = UITextField(frame: CGRect(x: 0 , y: 0, width: 0.8 * bounds.size.width, height: 0.08 * bounds.size.height))
         textView.backgroundColor = UIColor.lightGray
         textView.font = UIFont.boldSystemFont(ofSize: 20)
         textView.textAlignment = NSTextAlignment.center
         
+        predView = UITextField(frame: CGRect(x: 0 , y: 0.08 * bounds.size.height + 10, width: 0.8 * bounds.size.width, height: 0.08 * bounds.size.height))
+        predView.backgroundColor = UIColor.lightGray
+        predView.font = UIFont.boldSystemFont(ofSize: 20)
+        predView.textAlignment = NSTextAlignment.center
+        
         self.backgroundColor = UIColor.clear
         
         addSubview(textView)
+        addSubview(predView)
+        
+        
         
         
     
@@ -121,13 +130,14 @@ class GGView: UIView,UITextFieldDelegate {
         super.layoutSubviews()
         
 
-        textView.frame = CGRect(x: 0.1 * bounds.size.width , y: 0, width: 0.8 * bounds.size.width, height: 50)
+        textView.frame = CGRect(x: 0.1 * bounds.size.width , y: 0, width: 0.8 * bounds.size.width, height: 25)
+        predView.frame = CGRect(x: 0.1 * bounds.size.width , y: 30, width: 0.8 * bounds.size.width, height: 25)
         
         let colCount: Int = 3
         let rowCount: Int = 4
-        let w: CGFloat = 0.2 * bounds.size.width
+        let w: CGFloat = 0.25 * bounds.size.width
         let h: CGFloat = w
-        let space: CGFloat = 0.3 * bounds.size.height
+        let space: CGFloat = 0.1 * bounds.size.height
             //子view的横向间距  =  (父view的宽度- 3 * 子view的宽度) / 4
         let marginX: CGFloat = (bounds.size.width - CGFloat(colCount) * w) / CGFloat(colCount + 1)
         let marginY: CGFloat = (bounds.size.height - space - CGFloat(rowCount) * h) / CGFloat(rowCount + 1)

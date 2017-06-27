@@ -31,9 +31,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hpH-2a-fd0" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="2jm-gD-9FE"/>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.95" id="2jm-gD-9FE"/>
                             <constraint firstItem="hpH-2a-fd0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5k8-Np-X05"/>
-                            <constraint firstItem="hpH-2a-fd0" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="96W-hX-HOV"/>
+                            <constraint firstItem="hpH-2a-fd0" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="96W-hX-HOV"/>
                             <constraint firstItem="5Ia-ne-LVT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="LGw-4R-Ps0"/>
                             <constraint firstItem="5Ia-ne-LVT" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="RBY-VS-CPz"/>
                             <constraint firstItem="hpH-2a-fd0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="SJ7-oe-GcT"/>

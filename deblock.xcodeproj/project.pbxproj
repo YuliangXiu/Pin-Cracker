@@ -225,7 +225,7 @@
 				TargetAttributes = {
 					FA64CB661F00E598002235AA = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 36KM5A6YX4;
+						DevelopmentTeam = 4YLJV7EKDF;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -472,10 +472,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 36KM5A6YX4;
+				DEVELOPMENT_TEAM = 4YLJV7EKDF;
 				INFOPLIST_FILE = deblock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.edu.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.deblock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -486,10 +486,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 36KM5A6YX4;
+				DEVELOPMENT_TEAM = 4YLJV7EKDF;
 				INFOPLIST_FILE = deblock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.edu.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.deblock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

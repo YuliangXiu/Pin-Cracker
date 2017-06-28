@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreML
 
 
+@available(iOS 11.0, *)
 class ViewController: UIViewController {
 
 
@@ -16,9 +18,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var myview: GGView!
     
     
+    let model = pred()
+    
+    let input_data = try? MLMultiArray(shape:[4,16], dataType:MLMultiArrayDataType.double)
+    
+   //    else {
+//    fatalError("Unexpected runtime error. MLMultiArray")
+//    }
+//
+//    guard let Output = try? model.prediction(input1:matrix) else {
+//    fatalError("Unexpected runtime error.")
+//    }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let i = predInput(input1: input_data!)
+        let output = try? model.prediction(input: i)
+        let result = String(describing: output?.output1[0])
+        print(input_data!)
+        print(result)
         // Do any additional setup after loading the view, typically from a nib.
     }
     

@@ -8,8 +8,10 @@
 //
 import UIKit
 import CoreMotion
+import CoreML
 
 protocol GGViewdelegate: NSObjectProtocol {
+    @available(iOS 11.0, *)
     func viewtouchEnd(_ view: GGView)
 }
 
@@ -46,6 +48,7 @@ struct mobileData {
     }
 }
 
+@available(iOS 11.0, *)
 class GGView: UIView,UITextFieldDelegate {
     //定义按钮来记录被选中的按钮
     
@@ -59,11 +62,13 @@ class GGView: UIView,UITextFieldDelegate {
     var currentPoint = CGPoint.zero
     var textView : UITextField!
     var predView : UITextField!
+    var input_data = (try? MLMultiArray(shape:[4,48], dataType:MLMultiArrayDataType.double))!
     
     let motionManager = CMMotionManager()
     var timer: Timer!
     
     var all_motion_data:[Double] = []
+    var save_data:[Double] = []
     var one_line:String = ""
 
     required init(coder aDecoder: NSCoder) {
@@ -123,6 +128,7 @@ class GGView: UIView,UITextFieldDelegate {
         
         
         
+        
     
     }
 
@@ -164,17 +170,7 @@ class GGView: UIView,UITextFieldDelegate {
         
         
         
-        let one_line_str = self.one_line.data(using: String.Encoding.utf8)!
         
-        do{
-            let fileHandle = try FileHandle(forWritingTo: self.motionurl)
-            fileHandle.seekToEndOfFile()
-            fileHandle.write(one_line_str)
-            fileHandle.closeFile()
-        }
-        catch let error as NSError {
-            print("Ooops! Something went wrong: \(error)")
-        }
         
         //判断当前位置是不是在按钮上
         for sview in subviews[0..<10] {
@@ -184,6 +180,24 @@ class GGView: UIView,UITextFieldDelegate {
                 //定义属性来记录被选中的按钮
                 buttons.append(btn)
                 numbers.append((btn.tag + 1) % 10)
+                //记录传感数据
+                let one_line_str = self.one_line.data(using: String.Encoding.utf8)!
+                
+                do{
+                    let fileHandle = try FileHandle(forWritingTo: self.motionurl)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(one_line_str)
+                    fileHandle.closeFile()
+                }
+                catch let error as NSError {
+                    print("Ooops! Something went wrong: \(error)")
+                }
+                //add to model input
+                for i in 0..<24 {
+                    var k : NSNumber = NSNumber(value: self.buttons.count-1)
+                    var l : NSNumber = NSNumber(value: i)
+                    self.input_data[[k, l]] = NSNumber(value: self.save_data[i])
+                }
             }
         }
     }
@@ -197,13 +211,15 @@ class GGView: UIView,UITextFieldDelegate {
         let deviceMotion_rot = motionManager.deviceMotion?.rotationRate
         let deviceMotion_acc = motionManager.deviceMotion?.userAcceleration
         
-        all_motion_data += [acceData!.x,acceData!.y, acceData!.z]
-        all_motion_data += [gyroData!.x, gyroData!.y, gyroData!.z]
+  //      all_motion_data += [acceData!.x,acceData!.y, acceData!.z]
+ //       all_motion_data += [gyroData!.x, gyroData!.y, gyroData!.z]
 //        all_motion_data += [magnData!.x, magnData!.y, magnData!.z]
-        all_motion_data += [deviceMotion_acc!.x, deviceMotion_acc!.y, deviceMotion_acc!.z]
-        all_motion_data += [deviceMotion_rot!.x, deviceMotion_rot!.y, deviceMotion_rot!.z]
+ //       all_motion_data += [deviceMotion_acc!.x, deviceMotion_acc!.y, deviceMotion_acc!.z]
+ //       all_motion_data += [deviceMotion_rot!.x, deviceMotion_rot!.y, deviceMotion_rot!.z]
 //        all_motion_data += [deviceMotion_mag!.x, deviceMotion_mag!.y, deviceMotion_mag!.z]
         
+        self.save_data = []
+        self.save_data += self.all_motion_data
         self.one_line = all_motion_data.map({String( $0)}).joined(separator: " ")+"\n"
         all_motion_data = []
         
@@ -239,7 +255,7 @@ class GGView: UIView,UITextFieldDelegate {
             while i < self.buttons.count {
                 let btn: UIButton = self.buttons[i]
                 s += "\((btn.tag + 1) % 10)  "
-                out += "\((btn.tag + 1) % 10)"
+                out += "\((btn.tag + 1) % 10) "
                 i += 1
             }
             out += "\n"
@@ -256,6 +272,13 @@ class GGView: UIView,UITextFieldDelegate {
                 print("Ooops! Something went wrong: \(error)")
             }
             
+            for i in 25..<48 {
+                var k : NSNumber = NSNumber(value: self.buttons.count-1)
+                var l : NSNumber = NSNumber(value: i)
+                self.input_data[[k, l]] = NSNumber(value: self.save_data[i])
+                
+            }
+            
             
             if self.buttons.count == 4 {
                 let data = out.data(using: String.Encoding.utf8)!
@@ -269,6 +292,8 @@ class GGView: UIView,UITextFieldDelegate {
                 catch let error as NSError {
                     print("Ooops! Something went wrong: \(error)")
                 }
+                
+                print(self.input_data[[1,]])
 
                 self.buttons.removeAll()
                 self.numbers.removeAll()

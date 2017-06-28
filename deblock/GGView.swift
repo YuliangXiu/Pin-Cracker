@@ -34,6 +34,19 @@ func getTodayString() -> String{
     
 }
 
+@available(iOS 11.0, *)
+func argmax(array: MLMultiArray) -> Int{
+    var max : Double = -1
+    var arg = 0
+    for i in 0..<array.count {
+        if Double(array[i]) > max {
+            max = Double(array[i])
+            arg = i
+        }
+    }
+    return arg
+}
+
 struct mobileData {
     var accData:[Double] = []
     var gyroData:[Double] = []
@@ -62,7 +75,9 @@ class GGView: UIView,UITextFieldDelegate {
     var currentPoint = CGPoint.zero
     var textView : UITextField!
     var predView : UITextField!
-    var input_data = (try? MLMultiArray(shape:[4,48], dataType:MLMultiArrayDataType.double))!
+    var input_data = (try? MLMultiArray(shape:[24], dataType:MLMultiArrayDataType.double))!
+    var h_data = (try? MLMultiArray(shape:[10], dataType:MLMultiArrayDataType.double))!
+    var c_data = (try? MLMultiArray(shape:[10], dataType:MLMultiArrayDataType.double))!
     
     let motionManager = CMMotionManager()
     var timer: Timer!
@@ -70,6 +85,9 @@ class GGView: UIView,UITextFieldDelegate {
     var all_motion_data:[Double] = []
     var save_data:[Double] = []
     var one_line:String = ""
+    var show:String = ""
+    
+    var inbutton = false
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -126,6 +144,11 @@ class GGView: UIView,UITextFieldDelegate {
         addSubview(predView)
         
         
+        for i in 0..<10 {
+            h_data[i] = 0
+            c_data[i] = 0
+        }
+        
         
         
         
@@ -176,6 +199,7 @@ class GGView: UIView,UITextFieldDelegate {
         for sview in subviews[0..<10] {
             let btn = sview as! UIButton
             if btn.frame.contains(point!) {
+                inbutton = true
                 btn.isSelected = true
                 //定义属性来记录被选中的按钮
                 buttons.append(btn)
@@ -193,10 +217,10 @@ class GGView: UIView,UITextFieldDelegate {
                     print("Ooops! Something went wrong: \(error)")
                 }
                 //add to model input
-                for i in 0..<24 {
-                    var k : NSNumber = NSNumber(value: self.buttons.count-1)
-                    var l : NSNumber = NSNumber(value: i)
-                    self.input_data[[k, l]] = NSNumber(value: self.save_data[i])
+                for i in 0..<12 {
+                    //var k : NSNumber = NSNumber(value: self.buttons.count-1)
+                    //var l : NSNumber = NSNumber(value: i)
+                    self.input_data[i] = NSNumber(value: self.save_data[i])
                 }
             }
         }
@@ -211,11 +235,11 @@ class GGView: UIView,UITextFieldDelegate {
         let deviceMotion_rot = motionManager.deviceMotion?.rotationRate
         let deviceMotion_acc = motionManager.deviceMotion?.userAcceleration
         
-  //      all_motion_data += [acceData!.x,acceData!.y, acceData!.z]
- //       all_motion_data += [gyroData!.x, gyroData!.y, gyroData!.z]
+        all_motion_data += [acceData!.x,acceData!.y, acceData!.z]
+        all_motion_data += [gyroData!.x, gyroData!.y, gyroData!.z]
 //        all_motion_data += [magnData!.x, magnData!.y, magnData!.z]
- //       all_motion_data += [deviceMotion_acc!.x, deviceMotion_acc!.y, deviceMotion_acc!.z]
- //       all_motion_data += [deviceMotion_rot!.x, deviceMotion_rot!.y, deviceMotion_rot!.z]
+        all_motion_data += [deviceMotion_acc!.x, deviceMotion_acc!.y, deviceMotion_acc!.z]
+        all_motion_data += [deviceMotion_rot!.x, deviceMotion_rot!.y, deviceMotion_rot!.z]
 //        all_motion_data += [deviceMotion_mag!.x, deviceMotion_mag!.y, deviceMotion_mag!.z]
         
         self.save_data = []
@@ -255,50 +279,97 @@ class GGView: UIView,UITextFieldDelegate {
             while i < self.buttons.count {
                 let btn: UIButton = self.buttons[i]
                 s += "\((btn.tag + 1) % 10)  "
-                out += "\((btn.tag + 1) % 10) "
+                out += "\((btn.tag + 1) % 10)"
                 i += 1
             }
             out += "\n"
-            self.textView.text = s
-            let one_line_str = self.one_line.data(using: String.Encoding.utf8)!
             
-            do{
-                let fileHandle = try FileHandle(forWritingTo: self.motionurl)
-                fileHandle.seekToEndOfFile()
-                fileHandle.write(one_line_str)
-                fileHandle.closeFile()
-            }
-            catch let error as NSError {
-                print("Ooops! Something went wrong: \(error)")
-            }
             
-            for i in 25..<48 {
-                var k : NSNumber = NSNumber(value: self.buttons.count-1)
-                var l : NSNumber = NSNumber(value: i)
-                self.input_data[[k, l]] = NSNumber(value: self.save_data[i])
+            
+            
+//            //获取当前位置
+//            let touch: UITouch? = touches.first
+//            let point: CGPoint? = touch?.location(in: touch?.view)
+//
+//
+//            //判断当前位置是不是在按钮上
+//            for sview in self.subviews[0..<10] {
+//                let btn = sview as! UIButton
+//                if btn.frame.contains(point!) {
+//
+//                }
+//
+//
+//
+//            }
+            
+            if self.inbutton {
+                self.textView.text = s
                 
-            }
-            
-            
-            if self.buttons.count == 4 {
-                let data = out.data(using: String.Encoding.utf8)!
+                //记录传感数据
+                let one_line_str = self.one_line.data(using: String.Encoding.utf8)!
                 
                 do{
-                    let fileHandle = try FileHandle(forWritingTo: self.docurl)
+                    let fileHandle = try FileHandle(forWritingTo: self.motionurl)
                     fileHandle.seekToEndOfFile()
-                    fileHandle.write(data)
+                    fileHandle.write(one_line_str)
                     fileHandle.closeFile()
                 }
                 catch let error as NSError {
                     print("Ooops! Something went wrong: \(error)")
                 }
                 
-                print(self.input_data[[1,]])
-
-                self.buttons.removeAll()
-                self.numbers.removeAll()
-                self.setNeedsDisplay()
+                for i in 12..<23 {
+                    //var k : NSNumber = NSNumber(value: self.buttons.count-1)
+                    // var l : NSNumber = NSNumber(value: i)
+                    self.input_data[i] = NSNumber(value: self.save_data[i-12])
+                    
+                }
+                
+                let model = cc()
+                
+                let Input = ccInput(input1: self.input_data, lstm_3_h_in: self.h_data, lstm_3_c_in: self.c_data)
+                let Output = try? model.prediction(input: Input)
+                self.h_data = Output!.lstm_3_h_out
+                self.c_data = Output!.lstm_3_c_out
+                //print(Output!.output1)
+                let result = String(describing: argmax(array: Output!.output1))
+                self.show += "\(result)  "
+                self.predView.text = self.show
+                
+                if self.buttons.count == 4 {
+                    let data = out.data(using: String.Encoding.utf8)!
+                    
+                    do{
+                        let fileHandle = try FileHandle(forWritingTo: self.docurl)
+                        fileHandle.seekToEndOfFile()
+                        fileHandle.write(data)
+                        fileHandle.closeFile()
+                    }
+                    catch let error as NSError {
+                        print("Ooops! Something went wrong: \(error)")
+                    }
+                    
+                    // print(self.input_data[[1,]])
+                    
+                    for i in 0..<10 {
+                        self.h_data[i] = 0
+                        self.c_data[i] = 0
+                    }
+                    self.show = ""
+                    self.buttons.removeAll()
+                    self.numbers.removeAll()
+                    self.setNeedsDisplay()
+                }
+                
             }
+            
+            self.inbutton = false
+            
+            
+            
+            
+            
         })
     }
 

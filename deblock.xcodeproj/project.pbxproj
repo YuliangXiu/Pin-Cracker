@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72CF66DC1F04A69E00785BD3 /* cc.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAF130681F04128700B7B671 /* cc.mlmodel */; };
 		FA64CB6B1F00E598002235AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA64CB6A1F00E598002235AA /* AppDelegate.swift */; };
 		FA64CB6D1F00E598002235AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA64CB6C1F00E598002235AA /* ViewController.swift */; };
 		FA64CB701F00E598002235AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA64CB6E1F00E598002235AA /* Main.storyboard */; };
@@ -22,7 +23,6 @@
 		FA64CBA61F00E991002235AA /* gesture_node_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA64CB9F1F00E991002235AA /* gesture_node_normal.png */; };
 		FA64CBA71F00E991002235AA /* gesture_node_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA64CBA01F00E991002235AA /* gesture_node_normal@2x.png */; };
 		FA64CBA81F00E991002235AA /* Home_refresh_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FA64CBA11F00E991002235AA /* Home_refresh_bg.png */; };
-		FAF130691F04128700B7B671 /* cc.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAF130681F04128700B7B671 /* cc.mlmodel */; };
 		FAF1306B1F0413F700B7B671 /* pred.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAF1306A1F0413F700B7B671 /* pred.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -65,8 +65,8 @@
 		FA64CB9F1F00E991002235AA /* gesture_node_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gesture_node_normal.png; sourceTree = "<group>"; };
 		FA64CBA01F00E991002235AA /* gesture_node_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gesture_node_normal@2x.png"; sourceTree = "<group>"; };
 		FA64CBA11F00E991002235AA /* Home_refresh_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home_refresh_bg.png; sourceTree = "<group>"; };
-		FAF130681F04128700B7B671 /* cc.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = cc.mlmodel; path = ../../cc.mlmodel; sourceTree = "<group>"; };
-		FAF1306A1F0413F700B7B671 /* pred.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = pred.mlmodel; path = ../../pred.mlmodel; sourceTree = "<group>"; };
+		FAF130681F04128700B7B671 /* cc.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = cc.mlmodel; sourceTree = "<group>"; };
+		FAF1306A1F0413F700B7B671 /* pred.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = pred.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,7 +231,7 @@
 				TargetAttributes = {
 					FA64CB661F00E598002235AA = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 4YLJV7EKDF;
+						DevelopmentTeam = 36KM5A6YX4;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -310,7 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF130691F04128700B7B671 /* cc.mlmodel in Sources */,
+				72CF66DC1F04A69E00785BD3 /* cc.mlmodel in Sources */,
 				FA64CB991F00E8C8002235AA /* GGView.swift in Sources */,
 				FA64CB6D1F00E598002235AA /* ViewController.swift in Sources */,
 				FA64CB6B1F00E598002235AA /* AppDelegate.swift in Sources */,
@@ -480,10 +480,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4YLJV7EKDF;
+				DEVELOPMENT_TEAM = 36KM5A6YX4;
 				INFOPLIST_FILE = deblock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.deblock;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.edu.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -494,10 +494,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4YLJV7EKDF;
+				DEVELOPMENT_TEAM = 36KM5A6YX4;
 				INFOPLIST_FILE = deblock/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.deblock;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.sjtu.edu.cn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

@@ -76,8 +76,12 @@ class GGView: UIView,UITextFieldDelegate {
     var textView : UITextField!
     var predView : UITextField!
     var input_data = (try? MLMultiArray(shape:[24], dataType:MLMultiArrayDataType.double))!
-    var h_data = (try? MLMultiArray(shape:[10], dataType:MLMultiArrayDataType.double))!
-    var c_data = (try? MLMultiArray(shape:[10], dataType:MLMultiArrayDataType.double))!
+    var h_data = (try? MLMultiArray(shape:[50], dataType:MLMultiArrayDataType.double))!
+//    var h_raw = (try? MLMultiArray(shape:[50], dataType:MLMultiArrayDataType.double))!
+    var c_data = (try? MLMultiArray(shape:[50], dataType:MLMultiArrayDataType.double))!
+//    var c_raw = (try? MLMultiArray(shape:[50], dataType:MLMultiArrayDataType.double))!
+    var pin_num:Double = 0
+    var motion_num:Double = 0
     
     let motionManager = CMMotionManager()
     var timer: Timer!
@@ -147,6 +151,8 @@ class GGView: UIView,UITextFieldDelegate {
         for i in 0..<10 {
             h_data[i] = 0
             c_data[i] = 0
+//            h_raw[i] = 0
+//            c_raw[i] = 0
         }
         
         
@@ -209,6 +215,7 @@ class GGView: UIView,UITextFieldDelegate {
                 
                 do{
                     let fileHandle = try FileHandle(forWritingTo: self.motionurl)
+                    self.motion_num += 1
                     fileHandle.seekToEndOfFile()
                     fileHandle.write(one_line_str)
                     fileHandle.closeFile()
@@ -311,6 +318,7 @@ class GGView: UIView,UITextFieldDelegate {
                 
                 do{
                     let fileHandle = try FileHandle(forWritingTo: self.motionurl)
+                    self.motion_num += 1
                     fileHandle.seekToEndOfFile()
                     fileHandle.write(one_line_str)
                     fileHandle.closeFile()
@@ -327,13 +335,16 @@ class GGView: UIView,UITextFieldDelegate {
                 }
                 
                 let model = cc()
-                
-                let Input = ccInput(input1: self.input_data, lstm_3_h_in: self.h_data, lstm_3_c_in: self.c_data)
+                print(self.input_data)
+                let Input = ccInput(input1: self.input_data, lstm_56_h_in: self.h_data, lstm_56_c_in: self.c_data)
                 let Output = try? model.prediction(input: Input)
-                self.h_data = Output!.lstm_3_h_out
-                self.c_data = Output!.lstm_3_c_out
-                //print(Output!.output1)
+                self.h_data = Output!.lstm_56_h_out
+                self.c_data = Output!.lstm_56_c_out
+//                self.h_raw = Output!.bidirectional_19_h_out_rev
+//                self.c_raw = Output!.bidirectional_19_c_out_rev
+                print(Output!.output1)
                 let result = String(describing: argmax(array: Output!.output1))
+//                print(Output!.output1)
                 self.show += "\(result)  "
                 self.predView.text = self.show
                 
@@ -342,6 +353,8 @@ class GGView: UIView,UITextFieldDelegate {
                     
                     do{
                         let fileHandle = try FileHandle(forWritingTo: self.docurl)
+                        self.pin_num += 1
+//                        print(self.motion_num, self.pin_num*8)
                         fileHandle.seekToEndOfFile()
                         fileHandle.write(data)
                         fileHandle.closeFile()
@@ -355,6 +368,8 @@ class GGView: UIView,UITextFieldDelegate {
                     for i in 0..<10 {
                         self.h_data[i] = 0
                         self.c_data[i] = 0
+//                        self.c_raw[i] = 0
+//                        self.h_raw[i] = 0
                     }
                     self.show = ""
                     self.buttons.removeAll()
